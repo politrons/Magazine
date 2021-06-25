@@ -19,6 +19,7 @@ local.properties
 .idea/
 *.iml
 
+target
 
 # External tool builders
 .externalToolBuilders/
@@ -317,3 +318,6 @@ gradle-app.setting
 **/sigar*dll
 f2e-core/test
 f2e-mock/lib/
+/Infra/target/
+/Domain/target/
+/App/target/

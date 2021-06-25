@@ -15,6 +15,9 @@ import org.apache.commons.lang3.exception.ExceptionUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+/**
+ * Repository to persist the events and send to the [EventBus] to be consumed by [EventHandler]
+ */
 class MagazineRepositoryImpl(private val eventBus: Channel<MagazineEvent>) : MagazineRepository {
 
     private val logger: Logger = LoggerFactory.getLogger(MagazineRepositoryImpl::class.java)
