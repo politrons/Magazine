@@ -1,4 +1,7 @@
-package com.politrons.model
+package com.politrons.model.entities
+
+import com.politrons.model.valueObjects.ArticleId
+import com.politrons.model.valueObjects.TopicId
 
 /**
  * Entity that describe the Article to be publish in topic.
@@ -9,8 +12,8 @@ package com.politrons.model
  * * [many-to-one] Article -> CopyWriter - CopyWriter -> Articles
  */
 data class Article(
-    val id: String,
-    val topicId: String,
+    val id: ArticleId,
+    val topicId: TopicId,
     val journalistId: String,
     val copyWriterId: String,
     val published: Boolean,
@@ -18,11 +21,9 @@ data class Article(
     val suggestions: List<Suggestion>
 ) {
 
-    fun validateArticle() {
+    init {
         require(!this.published) { "An article already published cannot be publish again" }
         require(this.text.isNotEmpty()) { "Article text cannot be empty" }
-        require(this.id.isNotEmpty()) { "Article id cannot be empty" }
-        require(this.topicId.isNotEmpty()) { "Article topicId cannot be empty" }
         require(this.journalistId.isNotEmpty()) { "Article journalistId cannot be empty" }
         require(this.copyWriterId.isNotEmpty()) { "Article copyWriterId cannot be empty" }
     }

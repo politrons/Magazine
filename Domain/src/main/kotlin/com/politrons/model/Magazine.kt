@@ -1,7 +1,13 @@
 package com.politrons.model
 
-import arrow.fx.IO
 import com.politrons.exceptions.TopicNotFoundException
+import com.politrons.model.entities.Article
+import com.politrons.model.entities.Suggestion
+import com.politrons.model.entities.Topic
+import com.politrons.model.valueObjects.ArticleId
+import com.politrons.model.valueObjects.MagazineId
+import com.politrons.model.valueObjects.MagazineName
+import com.politrons.model.valueObjects.TopicId
 
 /**
  * Entity Aggregate root. This entity is the root of all entities, and we persist and query all values
@@ -11,7 +17,10 @@ import com.politrons.exceptions.TopicNotFoundException
  * * [one-to-Many] Magazine -> Topics - Topic -> Magazine
  */
 
-data class Magazine(val id: String, val topics: List<Topic>) {
+data class Magazine(val id: MagazineId,
+                    val name: MagazineName,
+                    val topics: List<Topic>) {
+
 
     /**
      * Function to add an article into the topic of the magazine.
@@ -36,8 +45,8 @@ data class Magazine(val id: String, val topics: List<Topic>) {
      * * We create a new magazine with the new topic instance filtering the old one
      */
     fun addSuggestion(
-        topicId: String,
-        articleId: String,
+        topicId: TopicId,
+        articleId: ArticleId,
         suggestion: Suggestion
     ): Magazine {
         val topic = findTopic(topicId)
@@ -51,9 +60,9 @@ data class Magazine(val id: String, val topics: List<Topic>) {
      * Function to find the topic within the magazine or return an error
      */
     private fun findTopic(
-        topicId: String
+        topicId: TopicId
     ): Topic =
-        (topics.find { topic -> topic.id == topicId }
+        (topics.find { topic -> topic.id.value == topicId.value }
             ?: throw TopicNotFoundException("Topic with id $topicId not found "))
 
     private fun filterTopicsById(

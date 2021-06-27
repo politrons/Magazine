@@ -1,6 +1,9 @@
-package com.politrons.model
+package com.politrons.model.entities
 
 import com.politrons.exceptions.ArticleNotFoundException
+import com.politrons.model.valueObjects.ArticleId
+import com.politrons.model.valueObjects.MagazineId
+import com.politrons.model.valueObjects.TopicId
 import org.junit.Test
 
 class TopicTest {
@@ -9,8 +12,8 @@ class TopicTest {
     fun addArticleSuccessful() {
         //Given
         val article = Article(
-            "id",
-            "topicId",
+            ArticleId("id"),
+            TopicId("topicId"),
             "journalistId",
             "copyWriterId",
             false,
@@ -18,8 +21,8 @@ class TopicTest {
             emptyList()
         )
         val topic = Topic(
-            "id",
-            "magazineId",
+            TopicId("topicId"),
+            MagazineId("magazineId"),
             "name",
             emptyList()
         )
@@ -34,8 +37,8 @@ class TopicTest {
     fun findArticleSuccessful() {
         //Given
         val article = Article(
-            "id",
-            "topicId",
+            ArticleId("id"),
+            TopicId("topicId"),
             "journalistId",
             "copyWriterId",
             false,
@@ -43,8 +46,8 @@ class TopicTest {
             emptyList()
         )
         val topic = Topic(
-            "id",
-            "magazineId",
+            TopicId("topicId"),
+            MagazineId("magazineId"),
             "name",
             listOf(article)
         )
@@ -59,8 +62,8 @@ class TopicTest {
     fun findArticleNotFoundError() {
         //Given
         val article = Article(
-            "id",
-            "topicId",
+            ArticleId("id"),
+            TopicId("topicId"),
             "journalistId",
             "copyWriterId",
             false,
@@ -68,8 +71,8 @@ class TopicTest {
             emptyList()
         )
         val topic = Topic(
-            "id",
-            "magazineId",
+            TopicId("topicId"),
+            MagazineId("magazineId"),
             "name",
            emptyList()
         )
@@ -78,30 +81,6 @@ class TopicTest {
         //Then
         assert(tryArticle.isFailure)
         assert(tryArticle.exceptionOrNull()!! is ArticleNotFoundException)
-    }
-
-    @Test
-    fun addArticleErrorFieldsRequiered() {
-        //Given
-        val article = Article(
-            "",
-            "",
-            "",
-            "",
-            false,
-            "",
-            emptyList()
-        )
-        val topic = Topic(
-            "id",
-            "magazineId",
-            "name",
-            emptyList()
-        )
-        //When
-        val tryArticle = kotlin.runCatching { topic.addArticle(article) }
-        //Then
-        assert(tryArticle.isFailure)
     }
 
 }
