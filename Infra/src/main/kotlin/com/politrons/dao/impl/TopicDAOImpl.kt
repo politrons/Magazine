@@ -2,7 +2,7 @@ package com.politrons.dao.impl
 
 import arrow.fx.IO
 import com.politrons.dao.TopicDAO
-import com.politrons.model.Topic
+import com.politrons.model.entities.Topic
 
 class TopicDAOImpl : TopicDAO {
 

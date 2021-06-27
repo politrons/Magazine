@@ -1,7 +1,7 @@
 package com.politrons.dao
 
 import arrow.fx.IO
-import com.politrons.model.Journalist
+import com.politrons.model.entities.Journalist
 
 interface JournalistDAO {
 

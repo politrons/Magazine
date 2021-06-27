@@ -1,14 +1,14 @@
 package com.politrons.dao.impl
 
 import com.politrons.dao.ArticleDAO
-import com.politrons.model.Article
+import com.politrons.model.entities.Article
 
 class ArticleDAOImpl : ArticleDAO {
 
     var database: Map<String, Article> = emptyMap()
 
     override fun save(article: Article) {
-        database = database + mapOf(article.id to article)
+        database = database + mapOf(article.id.value to article)
     }
 
     override fun find(id: String): Result<Article> {

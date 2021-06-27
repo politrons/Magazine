@@ -1,6 +1,6 @@
 package com.politrons.dao
 
-import com.politrons.model.Article
+import com.politrons.model.entities.Article
 
 //TODO:Not used
 interface ArticleDAO {

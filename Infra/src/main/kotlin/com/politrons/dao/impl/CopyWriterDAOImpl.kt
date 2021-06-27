@@ -2,7 +2,7 @@ package com.politrons.dao.impl
 
 import arrow.fx.IO
 import com.politrons.dao.CopyWriterDAO
-import com.politrons.model.CopyWriter
+import com.politrons.model.entities.CopyWriter
 
 //TODO:Mock implementation
 class CopyWriterDAOImpl : CopyWriterDAO {

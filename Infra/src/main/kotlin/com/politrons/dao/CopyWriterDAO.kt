@@ -1,8 +1,7 @@
 package com.politrons.dao
 
 import arrow.fx.IO
-import com.politrons.model.CopyWriter
-import com.politrons.model.Journalist
+import com.politrons.model.entities.CopyWriter
 
 interface CopyWriterDAO {
 

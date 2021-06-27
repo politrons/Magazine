@@ -1,7 +1,7 @@
 package com.politrons.dao
 
 import arrow.fx.IO
-import com.politrons.model.Topic
+import com.politrons.model.entities.Topic
 
 //TODO:Not used
 interface TopicDAO {

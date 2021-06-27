@@ -2,9 +2,7 @@ package com.politrons.dao.impl
 
 import arrow.fx.IO
 import com.politrons.dao.JournalistDAO
-import com.politrons.exceptions.JournalistNotFoundException
-import com.politrons.model.Journalist
-import java.util.*
+import com.politrons.model.entities.Journalist
 
 class JournalistDAOImpl : JournalistDAO {
 

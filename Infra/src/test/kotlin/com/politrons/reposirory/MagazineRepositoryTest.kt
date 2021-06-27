@@ -4,13 +4,19 @@ import com.politrons.events.ArticleDraftCreatedEvent
 import com.politrons.events.MagazineCreatedEvent
 import com.politrons.events.MagazineEvent
 import com.politrons.events.SuggestionAddedEvent
-import com.politrons.model.Article
-import com.politrons.model.Suggestion
+import com.politrons.model.entities.Article
+import com.politrons.model.entities.Suggestion
+import com.politrons.model.entities.Topic
+import com.politrons.model.valueObjects.ArticleId
+import com.politrons.model.valueObjects.MagazineId
+import com.politrons.model.valueObjects.MagazineName
+import com.politrons.model.valueObjects.TopicId
 import com.politrons.reposirory.impl.MagazineRepositoryImpl
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 
 class MagazineRepositoryTest {
 
@@ -20,11 +26,14 @@ class MagazineRepositoryTest {
         val repo = MagazineRepositoryImpl(channel)
         val event = MagazineCreatedEvent(
             "timestamp",
-            "magazineId",
-            emptyList()
+            MagazineId("magazineId"),
+            MagazineName("name"),
+            listOf(Mockito.mock(Topic::class.java))
         )
         val saveMagazineCreatedEventProgram = repo.saveMagazineCreatedEvent(event)
-        assert(kotlin.runCatching { saveMagazineCreatedEventProgram.unsafeRunSync() }.isSuccess)
+        val runCatching = kotlin.runCatching { saveMagazineCreatedEventProgram.unsafeRunSync() }
+        assert(runCatching.isSuccess)
+        assert(runCatching.getOrThrow().value.isNotEmpty())
         assert(runBlocking { channel.receive() }.magazineId == event.magazineId)
     }
 
@@ -34,17 +43,22 @@ class MagazineRepositoryTest {
         val repo = MagazineRepositoryImpl(channel)
         val createMagazineEvent = MagazineCreatedEvent(
             "timestamp",
-            "magazineId",
-            emptyList()
+            MagazineId("magazineId"),
+            MagazineName("name"),
+            listOf(Mockito.mock(Topic::class.java))
         )
         repo.saveMagazineCreatedEvent(createMagazineEvent).unsafeRunSync()
+        val articleMock = Mockito.mock(Article::class.java)
+        `when`(articleMock.id).thenReturn(ArticleId("articleId"))
         val event = ArticleDraftCreatedEvent(
             "timestamp",
-            "magazineId",
-            Mockito.mock(Article::class.java)
+            MagazineId("magazineId"),
+            articleMock
         )
         val saveMagazineCreatedEventProgram = repo.saveArticleDraftCreatedEvent(event)
-        assert(kotlin.runCatching { saveMagazineCreatedEventProgram.unsafeRunSync() }.isSuccess)
+        val runCatching = kotlin.runCatching { saveMagazineCreatedEventProgram.unsafeRunSync() }
+        assert(runCatching.isSuccess)
+        assert(runCatching.getOrThrow().value.isNotEmpty())
         assert(runBlocking { channel.receive() }.magazineId == event.magazineId)
     }
 
@@ -54,14 +68,16 @@ class MagazineRepositoryTest {
         val repo = MagazineRepositoryImpl(channel)
         val createMagazineEvent = MagazineCreatedEvent(
             "timestamp",
-            "magazineId",
-            emptyList()
+            MagazineId("magazineId"),
+            MagazineName("name"),
+            listOf(Mockito.mock(Topic::class.java))
         )
         repo.saveMagazineCreatedEvent(createMagazineEvent).unsafeRunSync()
         val event = SuggestionAddedEvent(
-            "magazineId",
-            "topicId",
-            "articleId",
+            "timestamp",
+            MagazineId("magazineId"),
+            TopicId("topicId"),
+            ArticleId("articleId"),
             Mockito.mock(Suggestion::class.java)
         )
         val saveMagazineCreatedEventProgram = repo.saveSuggestionAddedEvent(event)
