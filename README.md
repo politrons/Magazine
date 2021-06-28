@@ -1,4 +1,5 @@
 # Magazine
+![My image](img/magazine.png)
 
 For the design of Magazine I used Hexagonal + DDD + CQRS + Event Sourcing, I will explain a little bit why the use of these three architectures patters.
 
