@@ -1,0 +1,154 @@
+{
+	"info": {
+		"_postman_id": "ea12a467-2f43-48ba-afd3-607f0e4f2b3d",
+		"name": "Magazine",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Magazine",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "transactionId",
+						"value": "d1f65bc6-6b8b-4ebb-a2d0-b15365ddf4a8",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"editorId\":\"1981\",\"topics\": [\"Adventure\",\"Economics\"]}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/magazine/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"magazine",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Magazine",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "transactionId",
+						"value": "d1f65bc6-6b8b-4ebb-a2d0-b15365ddf4a8",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/magazine/0f5089ed-ff03-407c-a5ef-54da91ea3eb3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"magazine",
+						"0f5089ed-ff03-407c-a5ef-54da91ea3eb3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Article",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "transactionId",
+						"value": "d1f65bc6-6b8b-4ebb-a2d0-b15365ddf4a8",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"magazineId\": \"0f5089ed-ff03-407c-a5ef-54da91ea3eb3\",\n    \"topicId\": \"c8b609a4-aeb1-48bf-bac0-c2e80e73669c\",\n    \"journalistId\": \"journalistId\",\n    \"copyWriterId\": \"copyWriterId\",\n    \"title\": \"hello world\",\n    \"content\": \"content\"\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/magazine/article",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"magazine",
+						"article"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Suggestion",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "transactionId",
+						"value": "d1f65bc6-6b8b-4ebb-a2d0-b15365ddf4a8",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"magazineId\": \"0f5089ed-ff03-407c-a5ef-54da91ea3eb3\",\n    \"topicId\": \"c8b609a4-aeb1-48bf-bac0-c2e80e73669c\",\n    \"articleId\":\"d3bb33ad-87b8-46f5-a83d-cf784c168517\",\n    \"copyWriterId\": \"copyWriterId\",\n    \"originalText\": \"first draft\",\n    \"suggestionText\": \"second draft\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/magazine/article/suggestion",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"magazine",
+						"article",
+						"suggestion"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

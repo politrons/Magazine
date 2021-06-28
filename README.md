@@ -61,3 +61,8 @@ In our application I invested mostly of the time implementing the test framework
 * ```Unit```: I used JUnit together with Mockito to Mock external resources of your class.
 * ```Integration```: I used **process-exec-maven-plugin** plugin, to run the jar with all the classpath dependencies, 
 and then using JUnit we run the test against the endpoints of the service, to prove the end to end works as we expect.
+  
+## Running
+
+To run and test manually the service, you can just run the main class [MagazineServer](App/src/main/kotlin/com/politrons/resources/MagazineServer.kt)
+ and then open postman and import the endpoint [collection](postman/Magazine.postman_collection.json)
