@@ -27,6 +27,8 @@ class MagazineEventHandlerTest {
             eventBus.send(MagazineCreatedEvent("timestamp", MagazineId("magazineId"), MagazineName("name"), listOf(topic)))
         }
         runBlocking { launch.join() }
+        //Eventual consistency, nothing that I can do to avoid it
+        Thread.sleep(2000)
         val magazine: Magazine = eventHandler.get("magazineId").unsafeRunSync()
         assert(magazine.id.value == "magazineId")
         assert(magazine.topics.isNotEmpty())
@@ -43,6 +45,8 @@ class MagazineEventHandlerTest {
             eventBus.send(MagazineCreatedEvent("timestamp", MagazineId(""), MagazineName("name"), listOf(topic)))
         }
         runBlocking { launch.join() }
+        //Eventual consistency, nothing that I can do to avoid it
+        Thread.sleep(2000)
         val tryMagazine = kotlin.runCatching {  eventHandler.get("magazineId").unsafeRunSync() }
         assert(tryMagazine.isFailure)
         assert(tryMagazine.exceptionOrNull() is MagazineNotFoundException)
@@ -58,6 +62,8 @@ class MagazineEventHandlerTest {
             eventBus.send(MagazineCreatedEvent("timestamp", MagazineId("magazineId"), MagazineName("name"), emptyList()))
         }
         runBlocking { launch.join() }
+        //Eventual consistency, nothing that I can do to avoid it
+        Thread.sleep(2000)
         val tryMagazine = kotlin.runCatching {  eventHandler.get("magazineId").unsafeRunSync() }
         assert(tryMagazine.isFailure)
         assert(tryMagazine.exceptionOrNull() is MagazineNotFoundException)
