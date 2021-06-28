@@ -37,13 +37,10 @@ data class AddSuggestionCommand(
                 MagazineId(magazineId),
                 TopicId(topicId),
                 ArticleId(articleId),
-                Suggestion(
-                    SuggestionId(UUID.randomUUID().toString()),
-                    CopyWriter(copyWriterId, emptyList()),
-                    false,
-                    OriginalText(originalText),
-                    SuggestionText(suggestionText)
-                )
+                SuggestionId(UUID.randomUUID().toString()),
+                CopyWriter(copyWriterId, emptyList()),
+                OriginalText(originalText),
+                SuggestionText(suggestionText)
             )
         }
     }

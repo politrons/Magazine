@@ -4,9 +4,11 @@ import arrow.fx.IO
 import arrow.fx.extensions.fx
 import arrow.fx.handleErrorWith
 import com.politrons.command.impl.AddDraftCommand
+import com.politrons.dao.CopyWriterDAO
 import com.politrons.dao.JournalistDAO
 import com.politrons.events.ArticleDraftCreatedEvent
 import com.politrons.handler.AddDraftCommandHandler
+import com.politrons.model.entities.CopyWriter
 import com.politrons.model.valueObjects.ArticleId
 import com.politrons.model.entities.Journalist
 import com.politrons.reposirory.MagazineRepository
@@ -19,7 +21,8 @@ import org.slf4j.LoggerFactory
  */
 class AddDraftCommandHandlerImpl(
     private val magazineRepository: MagazineRepository,
-    private val journalistDAO: JournalistDAO
+    private val journalistDAO: JournalistDAO,
+    private val copyWriterDAO: CopyWriterDAO
 ) : AddDraftCommandHandler {
 
     private val logger: Logger = LoggerFactory.getLogger(AddDraftCommandHandlerImpl::class.java)
@@ -39,8 +42,9 @@ class AddDraftCommandHandlerImpl(
         addDraftCommand: AddDraftCommand
     ): IO<ArticleId> =
         IO.fx {
-            !validateJournalist(addDraftCommand)
-            val event = !addDraftCommand.createEvent()
+            val journalist = !validateJournalist(addDraftCommand)
+            val copyWriter = !validateCopyWriter(addDraftCommand)
+            val event = (!addDraftCommand.createEvent()).copy(journalist = journalist, copyWriter = copyWriter)
             !magazineRepository.saveArticleDraftCreatedEvent(event)
         }.handleErrorWith { t ->
             logger.error("Error in [addDraft]. Caused by ${ExceptionUtils.getStackTrace(t)}")
@@ -49,5 +53,8 @@ class AddDraftCommandHandlerImpl(
 
     private fun validateJournalist(addDraftCommand: AddDraftCommand): IO<Journalist> =
         journalistDAO.findById(addDraftCommand.journalistId)
+
+    private fun validateCopyWriter(addDraftCommand: AddDraftCommand): IO<CopyWriter> =
+        copyWriterDAO.findById(addDraftCommand.copyWriterId)
 }
 

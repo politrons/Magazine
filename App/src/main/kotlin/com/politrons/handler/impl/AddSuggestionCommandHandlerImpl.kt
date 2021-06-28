@@ -33,8 +33,8 @@ class AddSuggestionCommandHandlerImpl(
         addSuggestionCommand: AddSuggestionCommand
     ): IO<SuggestionId> =
         IO.fx {
-            !validateCopyWriter(addSuggestionCommand)
-            val event = !addSuggestionCommand.createEvent()
+            val copyWriter = !validateCopyWriter(addSuggestionCommand)
+            val event = (!addSuggestionCommand.createEvent()).copy(copyWriter = copyWriter)
             !magazineRepository.saveSuggestionAddedEvent(event)
         }.handleError { t ->
             logger.error("Error Adding suggestion in article. Caused by ${ExceptionUtils.getStackTrace(t)}")

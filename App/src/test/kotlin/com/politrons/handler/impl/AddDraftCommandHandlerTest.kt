@@ -30,7 +30,8 @@ class AddDraftCommandHandlerTest {
         val repository = MockUtils.MagazineRepositoryMock()
         val commandHandlerImpl = AddDraftCommandHandlerImpl(
             repository,
-            MockUtils.JournalistDAOMock()
+            MockUtils.JournalistDAOMock(),
+            MockUtils.CopyWriterDAOMock()
         )
         val magazineProgram: IO<ArticleId> = commandHandlerImpl.addDraft(draftCommand)
         val resultMagazine = kotlin.runCatching { magazineProgram.unsafeRunSync() }
@@ -50,7 +51,8 @@ class AddDraftCommandHandlerTest {
 
         val commandHandlerImpl = AddDraftCommandHandlerImpl(
             repositoryMock,
-            journalistDAOMock
+            journalistDAOMock,
+            MockUtils.CopyWriterDAOMock()
         )
         val magazineProgram = commandHandlerImpl.addDraft(draftCommand)
         val resultMagazine = kotlin.runCatching { magazineProgram.unsafeRunSync() }
@@ -66,11 +68,10 @@ class AddDraftCommandHandlerTest {
         val repositoryMock =
             MockUtils.MagazineRepositoryMock(saveArticleDraftCreatedEventFunc = { IO.raiseError(InternalError()) })
 
-        val journalistDAOMock = MockUtils.JournalistDAOMock()
-
         val commandHandlerImpl = AddDraftCommandHandlerImpl(
             repositoryMock,
-            journalistDAOMock
+            MockUtils.JournalistDAOMock(),
+            MockUtils.CopyWriterDAOMock()
         )
         val magazineProgram: IO<ArticleId> = commandHandlerImpl.addDraft(draftCommand)
         val resultMagazine = kotlin.runCatching { magazineProgram.unsafeRunSync() }

@@ -62,7 +62,7 @@ class MagazineServer(
                 CreateMagazineCommandHandlerImpl(magazineRepository, EditorDAOImpl())
 
             val addDraftCommandHandler =
-                AddDraftCommandHandlerImpl(magazineRepository, JournalistDAOImpl())
+                AddDraftCommandHandlerImpl(magazineRepository, JournalistDAOImpl(), CopyWriterDAOImpl())
 
             val addSuggestionCommandHandler =
                 AddSuggestionCommandHandlerImpl(magazineRepository, CopyWriterDAOImpl())

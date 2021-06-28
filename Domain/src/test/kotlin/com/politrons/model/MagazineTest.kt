@@ -94,17 +94,16 @@ class MagazineTest {
             TopicName("name"),
             listOf(article)
         )
-        val suggestion = Suggestion(
-            SuggestionId("id"),
-            Mockito.mock(CopyWriter::class.java),
-            false,
-            OriginalText("originalText"),
-            SuggestionText("suggestion")
-        )
+
+        val suggestionId = SuggestionId("id")
+        val copyWriter = Mockito.mock(CopyWriter::class.java)
+        val originalText=OriginalText("originalText")
+        val suggestionText=SuggestionText("originalText")
+
 
         val magazine = Magazine(MagazineId(UUID.randomUUID().toString()), MagazineName("name"), listOf(topic))
         //When
-        val tryMagazine = kotlin.runCatching { magazine.addSuggestion(topic.id, article.id, suggestion) }
+        val tryMagazine = kotlin.runCatching { magazine.addSuggestion(topic.id, article.id,  suggestionId, copyWriter, originalText, suggestionText) }
         //Then
         assert(tryMagazine.isSuccess)
         assert(tryMagazine.getOrThrow().topics.isNotEmpty())
@@ -131,17 +130,16 @@ class MagazineTest {
             TopicName("name"),
             listOf(article)
         )
-        val suggestion = Suggestion(
-            SuggestionId("id"),
-            CopyWriter("fooCopyWriterId", emptyList()),
-            false,
-            OriginalText("originalText"),
-            SuggestionText("suggestion")
-        )
+
+        val suggestionId = SuggestionId("id")
+        val copyWriter = Mockito.mock(CopyWriter::class.java)
+        val originalText=OriginalText("originalText")
+        val suggestionText=SuggestionText("suggestion")
+
 
         val magazine = Magazine(MagazineId(UUID.randomUUID().toString()), MagazineName("name"), listOf(topic))
         //When
-        val tryMagazine = kotlin.runCatching { magazine.addSuggestion(topic.id, article.id, suggestion) }
+        val tryMagazine = kotlin.runCatching { magazine.addSuggestion(topic.id, article.id, suggestionId, copyWriter, originalText, suggestionText) }
         //Then
         assert(tryMagazine.isFailure)
     }

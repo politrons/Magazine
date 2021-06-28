@@ -46,6 +46,7 @@ data class Magazine(
      * We follow next steps to perform the task:
      * * We search in the magazine the topic using the topicId
      * * We search the article in the topic using the articleId
+     * * We create the suggestion with all the information obtained.
      * * We add the suggestion in the article
      * * We add the new article instance in the topic filtering the old one
      * * We create a new magazine with the new topic instance filtering the old one
@@ -53,10 +54,14 @@ data class Magazine(
     fun addSuggestion(
         topicId: TopicId,
         articleId: ArticleId,
-        suggestion: Suggestion
+        suggestionId: SuggestionId,
+        copyWriter: CopyWriter,
+        originalText: OriginalText,
+        suggestionText: SuggestionText
     ): Magazine {
         val topic = findTopic(topicId)
         val article = topic.findArticle(articleId)
+        val suggestion = Suggestion(suggestionId, copyWriter, false, originalText, suggestionText)
         val newArticle = article.addSuggestion(suggestion)
         val newTopic = topic.addArticle(newArticle)
         return this.copy(topics = filterTopicsById(newTopic) + listOf(newTopic))

@@ -85,7 +85,10 @@ class MagazineRepositoryTest {
             MagazineId("magazineId"),
             TopicId("topicId"),
             ArticleId("articleId"),
-            Mockito.mock(Suggestion::class.java)
+            SuggestionId("id"),
+            Mockito.mock(CopyWriter::class.java),
+            OriginalText("originalText"),
+            SuggestionText("suggestion")
         )
         val saveMagazineCreatedEventProgram = repo.saveSuggestionAddedEvent(event)
         assert(kotlin.runCatching { saveMagazineCreatedEventProgram.unsafeRunSync() }.isSuccess)

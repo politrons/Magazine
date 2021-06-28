@@ -51,7 +51,7 @@ class MagazineRepositoryImpl(private val eventBus: Channel<MagazineEvent>) : Mag
         IO.effect {
             GlobalScope.launch { eventBus.send(event) }
             addEvent(event.magazineId, event)
-            event.suggestion.id
+            event.suggestionId
         }.handleError { t ->
             logger.error("Error storing SuggestionAddedEvent. Caused by ${ExceptionUtils.getStackTrace(t)}")
             throw t
