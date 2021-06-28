@@ -17,6 +17,7 @@ In Magazine I implemented three modules described like:
 
 Domain Driven Design it's a design pattern for dealing with highly complex domains that is based on making the domain itself the main focus of the project.
 
+![My image](img/ddd_diagram.png)
 
 ## CQRS
 
@@ -27,8 +28,11 @@ is for Queries.
 In Magazine I implemented CommandHandlers for each Commands and EventHandler to deal with Queries.
 
 * ```CommandHandlers```: Receives commands and transforms the Command into Events, to be passed into the infrastructure,
-  where is persisted and sent to the EvenBus to be consumed by EventHandler.
-* ```EventHandler```: Receives Queries and we render the EntityAggregateRoot with the latest state.
+  where is persisted and sent to the ```EventBus``` to be consumed by ```EventHandler```.
+* ```EventHandler```: It's subscribed to the ```EventBus``` and each time we receive a ```MagazineEvent```
+  we rehydrate the Magazine actor. 
+  
+    Then once we receive a **Query** and we render the Magazine with the latest state.
 
 ![My image](img/cqrs.png)
 
@@ -45,6 +49,7 @@ In Magazine, Event sourcing together with CQRS, allow us persist events in order
 * ```ArticleDraftCreatedEvent```: Event that keep the state of the add draft article in the magazine.
 * ```SuggestionAddedEvent```: Event that keep the state of the add suggestion into the article.
 
+## Testing
 
 ![My image](img/testPyramid.png)
 
