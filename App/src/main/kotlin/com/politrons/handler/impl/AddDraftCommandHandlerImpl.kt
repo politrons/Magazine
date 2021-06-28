@@ -3,7 +3,7 @@ package com.politrons.handler.impl
 import arrow.fx.IO
 import arrow.fx.extensions.fx
 import arrow.fx.handleErrorWith
-import com.politrons.command.AddDraftCommand
+import com.politrons.command.impl.AddDraftCommand
 import com.politrons.dao.JournalistDAO
 import com.politrons.events.ArticleDraftCreatedEvent
 import com.politrons.handler.AddDraftCommandHandler

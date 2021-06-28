@@ -1,7 +1,7 @@
 package com.politrons.handler.impl
 
 import arrow.fx.IO
-import com.politrons.command.AddDraftCommand
+import com.politrons.command.impl.AddDraftCommand
 import com.politrons.exceptions.JournalistNotFoundException
 import com.politrons.handler.impl.AddDraftCommandHandlerTest.MagazineServiceSpec.magazineId
 import com.politrons.handler.impl.AddDraftCommandHandlerTest.MagazineServiceSpec.topicId

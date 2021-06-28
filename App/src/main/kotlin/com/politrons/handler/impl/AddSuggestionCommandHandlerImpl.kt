@@ -3,7 +3,7 @@ package com.politrons.handler.impl
 import arrow.fx.IO
 import arrow.fx.extensions.fx
 import arrow.fx.handleError
-import com.politrons.command.AddSuggestionCommand
+import com.politrons.command.impl.AddSuggestionCommand
 import com.politrons.dao.CopyWriterDAO
 import com.politrons.events.SuggestionAddedEvent
 import com.politrons.handler.AddSuggestionCommandHandler

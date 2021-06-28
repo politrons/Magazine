@@ -1,7 +1,7 @@
 package com.politrons.handler.impl
 
 import arrow.fx.IO
-import com.politrons.command.AddSuggestionCommand
+import com.politrons.command.impl.AddSuggestionCommand
 import com.politrons.handler.impl.AddSuggestionCommandHandlerTest.MagazineServiceSpec.articleId
 import com.politrons.handler.impl.AddSuggestionCommandHandlerTest.MagazineServiceSpec.copyWriterId
 import com.politrons.handler.impl.AddSuggestionCommandHandlerTest.MagazineServiceSpec.magazineId

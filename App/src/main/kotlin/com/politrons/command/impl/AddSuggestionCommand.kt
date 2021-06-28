@@ -1,6 +1,7 @@
-package com.politrons.command
+package com.politrons.command.impl
 
 import arrow.fx.IO
+import com.politrons.command.MagazineCommand
 import com.politrons.events.SuggestionAddedEvent
 import com.politrons.model.entities.Suggestion
 import com.politrons.model.valueObjects.ArticleId
@@ -17,11 +18,11 @@ data class AddSuggestionCommand(
     val originalText: String,
     val suggestionText: String
 
-) {
+): MagazineCommand {
     /**
      * Function to validate Command and create the SuggestionAddedEvent
      */
-    fun createEvent(): IO<SuggestionAddedEvent> {
+    override fun createEvent(): IO<SuggestionAddedEvent> {
         return IO.effect {
             require(this.magazineId.isNotEmpty()) { "magazineId cannot be empty" }
             require(this.topicId.isNotEmpty()) { "topicId cannot be empty" }

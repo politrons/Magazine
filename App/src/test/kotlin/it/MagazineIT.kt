@@ -1,127 +1,85 @@
 package it
 
-import com.google.gson.Gson
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.politrons.command.MagazineCommand
+import com.politrons.command.impl.AddDraftCommand
+import com.politrons.command.impl.CreateMagazineCommand
 import com.politrons.model.Magazine
-import com.politrons.model.valueObjects.ArticleId
 import com.politrons.model.valueObjects.MagazineId
 import io.ktor.client.*
-import io.ktor.client.call.*
 import io.ktor.client.engine.apache.*
+import io.ktor.client.features.json.*
 import io.ktor.client.request.*
-import io.ktor.client.statement.*
 import io.ktor.http.*
-import io.ktor.utils.io.*
 import kotlinx.coroutines.runBlocking
-import org.junit.Ignore
 import org.junit.Test
 
-
+/**
+ * Integration test that prove the end to end implementation works without any mock between layers.
+ */
 class MagazineIT {
 
-    /**
-     * Magazine
-     * ---------
-     */
-
-    private val gson = Gson()
-
     @Test
-    fun createMagazineId() {
-        val client = HttpClient(Apache)
-        runBlocking {
-
-            val magazineId = createMagazineId(client)
-
-            val response: HttpResponse = client.get("http://localhost:8080/magazine/${magazineId.value}") {
-                method = HttpMethod.Get
+    fun createMagazine() {
+        val client = HttpClient(Apache) {
+            install(JsonFeature) {
+                serializer = JacksonSerializer() {
+                    enable(SerializationFeature.INDENT_OUTPUT)
+                }
             }
-
-            val magazine = gson.fromJson(response.content, Magazine::class.java)
-            assert(response.status.value == 200)
-            assert(magazine.id.value.isNotEmpty())
-
+        }
+        runBlocking {
+            val command = CreateMagazineCommand("1981", "National Geographic", listOf("Adventure"))
+            val magazineId = runCommandRequest("http://localhost:8080/magazine",client, command)
+            val magazine: Magazine = runQueryRequest(client, magazineId)
+            assert(magazine.id.value == magazineId)
+            assert(magazine.topics.isNotEmpty())
+            assert(magazine.topics[0].name == command.topics[0])
         }
         client.close()
     }
 
-//    @Test
-//    fun addDraft() {
-//        val client = HttpClient(Apache)
-//        runBlocking {
-//
-//            val magazineId = createMagazineId(client)
-//            val newMagazine = addArticle(client, magazineId)
-//
-//            assert(newMagazine.id.value.isNotEmpty())
-//            assert(newMagazine.topics[0].articles.isNotEmpty())
-//        }
-//        client.close()
-//    }
+    @Test
+    fun addDraft() {
+        val client = HttpClient(Apache) {
+            install(JsonFeature) {
+                serializer = JacksonSerializer() {
+                    enable(SerializationFeature.INDENT_OUTPUT)
+                }
+            }
+        }
+        runBlocking {
+            val createMagazineCommand = CreateMagazineCommand("1981", "National Geographic", listOf("Adventure"))
+            val magazineId = runCommandRequest("http://localhost:8080/magazine",client, createMagazineCommand)
+            val magazine: Magazine = runQueryRequest(client, magazineId)
+            val addDraftCommand = AddDraftCommand(
+                magazine.id.value,
+                magazine.topics[0].id.value,
+                "journalistId",
+                "copyWriterId",
+                "first draft iteration"
+            )
+            val articleId = runCommandRequest("http://localhost:8080/magazine/article", client, addDraftCommand)
+            assert(articleId.isNotEmpty())
 
-//    //TODO:Fix me
-//    @Ignore
-//    fun addSuggestion() {
-//        val client = HttpClient(Apache)
-//        runBlocking {
-//
-//            val magazine = createMagazineId(client)
-//            val addArticleMagazine = addArticle(client, magazine)
-//            val newMagazineJson = client.post<String>("http://localhost:8080/magazine/article/suggestion") {
-//                contentType(ContentType.Application.Json)
-//                body = """
-//                    {
-//                        "magazineId": ": ${addArticleMagazine.id}: ",
-//                        "topicId": ": ${addArticleMagazine.topics[0].id}: ",
-//                        "articleId":":${addArticleMagazine.topics[0].articles[0].id}:",
-//                        "copyWriterId": "copyWriterId",
-//                        "originalText": "first draft",
-//                        "suggestionText": "second draft"
-//                    }
-//                """.trimIndent()
-//
-//            }
-//
-//            val newMagazine = gson.fromJson(newMagazineJson, Magazine::class.java)
-//
-//            assert(newMagazine.id.value.isNotEmpty())
-//            assert(newMagazine.topics[0].articles[0].suggestions.isNotEmpty())
-//
-//        }
-//        client.close()
-//
-//    }
-
-//    private suspend fun addArticle(
-//        client: HttpClient,
-//        magazineId: MagazineId
-//    ): ArticleId {
-//        return ArticleId(client.post("http://localhost:8080/magazine/article") {
-//            contentType(ContentType.Application.Json)
-//            body = """{
-//                            "magazineId": "${magazineId.id}",
-//                            "topicId": "${magazine.topics[0].id}",
-//                            "journalistId": "journalistId",
-//                            "copyWriterId": "copyWriterId",
-//                            "text": "hello world"
-//                        }"""
-//        })
-//    }
-
-
-    private suspend fun createMagazineId(client: HttpClient): MagazineId {
-        return MagazineId(client.post("http://localhost:8080/magazine") {
-            contentType(ContentType.Application.Json)
-            body = """{"editorId":"1981","name":"magazineId", "topics": ["Adventure"]}"""
-        })
+            val newMagazine: Magazine = runQueryRequest(client, magazineId)
+            assert(newMagazine.topics[0].articles.isNotEmpty())
+            assert(newMagazine.topics[0].articles[0].text == "first draft iteration")
+        }
+        client.close()
     }
 
-    private suspend fun createMagazine(client: HttpClient): Magazine {
-        val magazineJson = client.post<String>("http://localhost:8080/magazine") {
-            contentType(ContentType.Application.Json)
-            body = """{"editorId":"1981","topics": ["Adventure"]}"""
-        }
+    private suspend fun runQueryRequest(
+        client: HttpClient,
+        magazineId: String
+    ): Magazine = client.get("http://localhost:8080/magazine/${magazineId}")
 
-        return gson.fromJson(magazineJson, Magazine::class.java)
+
+    private suspend fun runCommandRequest(uri:String, client: HttpClient, magazineCommand: MagazineCommand): String {
+        return client.post(uri) {
+            contentType(ContentType.Application.Json)
+            body = magazineCommand
+        }
     }
 
 

@@ -1,7 +1,7 @@
 package com.politrons.handler.impl
 
 import arrow.fx.IO
-import com.politrons.command.CreateMagazineCommand
+import com.politrons.command.impl.CreateMagazineCommand
 import com.politrons.exceptions.EditorNotFoundException
 import com.politrons.handler.impl.CreateMagazineCommandHandlerTest.MagazineServiceSpec.editorId
 import com.politrons.mocks.MockUtils

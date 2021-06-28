@@ -1,6 +1,6 @@
 package com.politrons.command
 
-import com.politrons.model.valueObjects.MagazineName
+import com.politrons.command.impl.CreateMagazineCommand
 import org.junit.Test
 
 class CreateMagazineCommandTest {

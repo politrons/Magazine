@@ -1,5 +1,6 @@
 package com.politrons.command
 
+import com.politrons.command.impl.AddDraftCommand
 import org.junit.Test
 
 class AddDraftCommandTest {

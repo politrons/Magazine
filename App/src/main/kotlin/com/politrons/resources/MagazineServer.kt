@@ -5,9 +5,9 @@ import arrow.fx.IO
 import arrow.fx.extensions.fx
 import arrow.fx.handleError
 import com.fasterxml.jackson.databind.SerializationFeature
-import com.politrons.command.AddDraftCommand
-import com.politrons.command.AddSuggestionCommand
-import com.politrons.command.CreateMagazineCommand
+import com.politrons.command.impl.AddDraftCommand
+import com.politrons.command.impl.AddSuggestionCommand
+import com.politrons.command.impl.CreateMagazineCommand
 import com.politrons.dao.impl.CopyWriterDAOImpl
 import com.politrons.dao.impl.EditorDAOImpl
 import com.politrons.dao.impl.JournalistDAOImpl

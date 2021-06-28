@@ -3,7 +3,7 @@ package com.politrons.handler.impl
 import arrow.fx.IO
 import arrow.fx.extensions.fx
 import arrow.fx.handleError
-import com.politrons.command.CreateMagazineCommand
+import com.politrons.command.impl.CreateMagazineCommand
 import com.politrons.dao.EditorDAO
 import com.politrons.events.MagazineCreatedEvent
 import com.politrons.handler.CreateMagazineCommandHandler
