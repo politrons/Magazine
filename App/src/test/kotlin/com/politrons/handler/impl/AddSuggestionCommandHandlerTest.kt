@@ -61,40 +61,6 @@ class AddSuggestionCommandHandlerTest {
         assert(resultMagazine.exceptionOrNull()!! is InternalError)
     }
 
-    @Test
-    fun addSuggestionErrorWithWrongCopyWriterId() {
-        val originalText = ""
-        val suggestionText = ""
-        val suggestionCommand =
-            AddSuggestionCommand(magazineId, topicId, articleId, copyWriterId, originalText, suggestionText)
-
-        val repository = MockUtils.MagazineRepositoryMock()
-        val magazineService = AddSuggestionCommandHandlerImpl(
-            repository,
-            MockUtils.CopyWriterDAOMock()
-        )
-        val magazineProgram = magazineService.addSuggestion(suggestionCommand)
-        val resultMagazine = kotlin.runCatching { magazineProgram.unsafeRunSync() }
-        assert(resultMagazine.isFailure)
-        assert(resultMagazine.exceptionOrNull()!! is IllegalArgumentException)
-    }
-
-    @Test
-    fun addSuggestionErrorWithCommand() {
-        val originalText = ""
-        val suggestionText = ""
-        val suggestionCommand =
-            AddSuggestionCommand(magazineId, topicId, articleId, copyWriterId, originalText, suggestionText)
-
-        val repository = MockUtils.MagazineRepositoryMock()
-        val magazineService = AddSuggestionCommandHandlerImpl(
-            repository,
-            MockUtils.CopyWriterDAOMock()
-        )
-        val magazineProgram = magazineService.addSuggestion(suggestionCommand)
-        val resultMagazine = kotlin.runCatching { magazineProgram.unsafeRunSync() }
-        assert(resultMagazine.isFailure)
-    }
 
 
 }

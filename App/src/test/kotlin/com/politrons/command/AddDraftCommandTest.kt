@@ -1,5 +1,6 @@
 package com.politrons.command
 
+import arrow.core.valid
 import com.politrons.command.impl.AddDraftCommand
 import org.junit.Test
 
@@ -12,6 +13,7 @@ class AddDraftCommandTest {
             "topicId",
             "journalistId",
             "copyWriterId",
+            "title",
             "text"
         )
         val tryEvent = kotlin.runCatching { command.createEvent().unsafeRunSync() }
@@ -20,19 +22,21 @@ class AddDraftCommandTest {
         assert(tryEvent.getOrThrow().article.topicId.value == command.topicId)
         assert(tryEvent.getOrThrow().article.journalistId == command.journalistId)
         assert(tryEvent.getOrThrow().article.copyWriterId == command.copyWriterId)
-        assert(tryEvent.getOrThrow().article.text == command.text)
+        assert(tryEvent.getOrThrow().article.title.value == command.title)
+        assert(tryEvent.getOrThrow().article.content.value == command.content)
     }
 
     @Test
     fun createEventErrorRequiredField() {
-        val command = AddDraftCommand(
-            "",
-            "",
-            "",
-            "",
-            ""
-        )
-        val tryEvent = kotlin.runCatching { command.createEvent().unsafeRunSync() }
-        assert(tryEvent.isFailure)
+        val command = kotlin.runCatching {
+            AddDraftCommand(
+                "",
+                "",
+                "",
+                "",
+                "", ""
+            )
+        }
+        assert(command.isFailure)
     }
 }

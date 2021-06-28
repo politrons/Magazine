@@ -48,19 +48,6 @@ class CreateMagazineCommandHandlerTest {
     }
 
     @Test
-    fun createMagazineErrorWrongTopicInfo() {
-        val createMagazineCommand = CreateMagazineCommand(editorId, "name", listOf("", "Adventure"))
-        val commandHandlerImpl = CreateMagazineCommandHandlerImpl(
-            MockUtils.MagazineRepositoryMock(),
-            MockUtils.EditorDAOMock()
-        )
-        val magazineProgram = commandHandlerImpl.createMagazine(createMagazineCommand)
-        val resultMagazine = kotlin.runCatching { magazineProgram.unsafeRunSync() }
-        assert(resultMagazine.isFailure)
-        assert(resultMagazine.exceptionOrNull()!! is java.lang.IllegalArgumentException)
-    }
-
-    @Test
     fun createMagazineErrorWrongDatabaseConnection() {
         val createMagazineCommand = CreateMagazineCommand(editorId, "name", listOf("Economics", "Adventure"))
         val repository =

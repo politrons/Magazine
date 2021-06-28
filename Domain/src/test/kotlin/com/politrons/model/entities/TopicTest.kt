@@ -1,9 +1,7 @@
 package com.politrons.model.entities
 
 import com.politrons.exceptions.ArticleNotFoundException
-import com.politrons.model.valueObjects.ArticleId
-import com.politrons.model.valueObjects.MagazineId
-import com.politrons.model.valueObjects.TopicId
+import com.politrons.model.valueObjects.*
 import org.junit.Test
 
 class TopicTest {
@@ -17,7 +15,8 @@ class TopicTest {
             "journalistId",
             "copyWriterId",
             false,
-            "text",
+            ArticleTitle("title"),
+            ArticleContent("text"),
             emptyList()
         )
         val topic = Topic(
@@ -42,7 +41,8 @@ class TopicTest {
             "journalistId",
             "copyWriterId",
             false,
-            "text",
+            ArticleTitle("title"),
+            ArticleContent("text"),
             emptyList()
         )
         val topic = Topic(
@@ -67,7 +67,8 @@ class TopicTest {
             "journalistId",
             "copyWriterId",
             false,
-            "text",
+            ArticleTitle("title"),
+            ArticleContent("text"),
             emptyList()
         )
         val topic = Topic(

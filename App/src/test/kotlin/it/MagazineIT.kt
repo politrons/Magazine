@@ -57,7 +57,8 @@ class MagazineIT {
 
             val newMagazine: Magazine = runQueryRequest(client, magazineId)
             assert(newMagazine.topics[0].articles.isNotEmpty())
-            assert(newMagazine.topics[0].articles[0].text == "first draft iteration")
+            assert(newMagazine.topics[0].articles[0].title.value == "title")
+            assert(newMagazine.topics[0].articles[0].content.value == "first draft iteration")
         }
         client.close()
     }
@@ -107,6 +108,7 @@ class MagazineIT {
             magazine.topics[0].id.value,
             "journalistId",
             "copyWriterId",
+            "title",
             "first draft iteration"
         )
         return runCommandRequest("http://localhost:8080/magazine/article", client, addDraftCommand)

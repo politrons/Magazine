@@ -9,7 +9,7 @@ class CreateMagazineCommandTest {
     fun createEventSuccessful() {
         val command = CreateMagazineCommand(
             "editorId",
-           "name",
+            "name",
             listOf("Economics")
         )
         val tryEvent = kotlin.runCatching { command.createEvent().unsafeRunSync() }
@@ -20,12 +20,27 @@ class CreateMagazineCommandTest {
 
     @Test
     fun createEventErrorRequiredField() {
-        val command = CreateMagazineCommand(
-            "",
-            "",
-            emptyList()
-        )
-        val tryEvent = kotlin.runCatching { command.createEvent().unsafeRunSync() }
-        assert(tryEvent.isFailure)
+        val command = kotlin.runCatching {
+            CreateMagazineCommand(
+                "",
+                "",
+                emptyList()
+            )
+        }
+        assert(command.isFailure)
     }
+
+    @Test
+    fun createEventErrorTopicEmpty() {
+        val command = kotlin.runCatching {
+            CreateMagazineCommand(
+                "editorId",
+                "name",
+                listOf("")
+            )
+        }
+        assert(command.isFailure)
+
+    }
+
 }

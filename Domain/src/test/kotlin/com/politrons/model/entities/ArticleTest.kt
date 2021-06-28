@@ -1,8 +1,6 @@
 package com.politrons.model.entities
 
-import com.politrons.model.valueObjects.ArticleId
-import com.politrons.model.valueObjects.SuggestionId
-import com.politrons.model.valueObjects.TopicId
+import com.politrons.model.valueObjects.*
 import org.junit.Test
 
 class ArticleTest {
@@ -16,7 +14,8 @@ class ArticleTest {
             "journalistId",
             "copyWriterId",
             false,
-            "text",
+            ArticleTitle("title"),
+            ArticleContent("text"),
             emptyList()
         )
         val suggestion = Suggestion(
@@ -42,7 +41,8 @@ class ArticleTest {
             "journalistId",
             "copyWriterId",
             false,
-            "text",
+            ArticleTitle("title"),
+            ArticleContent("text"),
             emptyList()
         )
         val suggestion = Suggestion(
@@ -68,7 +68,8 @@ class ArticleTest {
                 "journalistId",
                 "copyWriterId",
                 true,
-                "text",
+                ArticleTitle("title"),
+                ArticleContent("text"),
                 emptyList()
             )
         }
@@ -88,7 +89,8 @@ class ArticleTest {
                 "",
                 "",
                 false,
-                "",
+                ArticleTitle(""),
+                ArticleContent(""),
                 emptyList()
             )
         }

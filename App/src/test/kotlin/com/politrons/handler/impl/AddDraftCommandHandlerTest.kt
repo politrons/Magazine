@@ -25,7 +25,7 @@ class AddDraftCommandHandlerTest {
 
     @Test
     fun addDraftSuccessfully() {
-        val draftCommand = AddDraftCommand(magazineId, topicId, "journalistId", "copyWriterId", "some text")
+        val draftCommand = AddDraftCommand(magazineId, topicId, "journalistId", "copyWriterId", "title", "some text")
 
         val repository = MockUtils.MagazineRepositoryMock()
         val commandHandlerImpl = AddDraftCommandHandlerImpl(
@@ -39,27 +39,8 @@ class AddDraftCommandHandlerTest {
     }
 
     @Test
-    fun addDraftErrorInRequiredFields() {
-        val draftCommand = AddDraftCommand(magazineId, topicId, "", "", "t")
-
-        val repositoryMock =
-            MockUtils.MagazineRepositoryMock()
-
-        val journalistDAOMock = MockUtils.JournalistDAOMock()
-
-        val commandHandlerImpl = AddDraftCommandHandlerImpl(
-            repositoryMock,
-            journalistDAOMock
-        )
-        val magazineProgram: IO<ArticleId> = commandHandlerImpl.addDraft(draftCommand)
-        val resultMagazine = kotlin.runCatching { magazineProgram.unsafeRunSync() }
-        assert(resultMagazine.isFailure)
-        assert(resultMagazine.exceptionOrNull()!! is IllegalArgumentException)
-    }
-
-    @Test
     fun addDraftErrorInFindJournalist() {
-        val draftCommand = AddDraftCommand(magazineId, topicId, "journalistId", "copyWriterId", "some text")
+        val draftCommand = AddDraftCommand(magazineId, topicId, "journalistId", "copyWriterId", "title","some text")
 
         val repositoryMock = MockUtils.MagazineRepositoryMock()
 
@@ -80,7 +61,7 @@ class AddDraftCommandHandlerTest {
 
     @Test
     fun addDraftErrorInDatabase() {
-        val draftCommand = AddDraftCommand(magazineId, topicId, "journalistId", "copyWriterId", "some text")
+        val draftCommand = AddDraftCommand(magazineId, topicId, "journalistId", "copyWriterId", "title", "some text")
 
         val repositoryMock =
             MockUtils.MagazineRepositoryMock(saveArticleDraftCreatedEventFunc = { IO.raiseError(InternalError()) })

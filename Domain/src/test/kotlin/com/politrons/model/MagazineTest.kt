@@ -18,7 +18,8 @@ class MagazineTest {
             "journalistId",
             "copyWriterId",
             false,
-            "text",
+            ArticleTitle("title"),
+            ArticleContent("text"),
             emptyList()
         )
         val topic = Topic(
@@ -46,7 +47,8 @@ class MagazineTest {
             "journalistId",
             "copyWriterId",
             false,
-            "text",
+            ArticleTitle("title"),
+            ArticleContent("text"),
             emptyList()
         )
         val topic = Topic(
@@ -72,7 +74,8 @@ class MagazineTest {
             "journalistId",
             "copyWriterId",
             false,
-            "text",
+            ArticleTitle("title"),
+            ArticleContent("text"),
             emptyList()
         )
         val topic = Topic(
@@ -108,7 +111,8 @@ class MagazineTest {
             "journalistId",
             "copyWriterId",
             false,
-            "text",
+            ArticleTitle("title"),
+            ArticleContent("text"),
             emptyList()
         )
         val topic = Topic(

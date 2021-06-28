@@ -28,15 +28,16 @@ class AddSuggestionCommandTest {
 
     @Test
     fun createEventErrorRequiredField() {
-        val command = AddSuggestionCommand(
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
-        )
-        val tryEvent = kotlin.runCatching { command.createEvent().unsafeRunSync() }
-        assert(tryEvent.isFailure)
+        val command = kotlin.runCatching {
+            AddSuggestionCommand(
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            )
+        }
+        assert(command.isFailure)
     }
 }

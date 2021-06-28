@@ -19,17 +19,21 @@ data class AddSuggestionCommand(
     val suggestionText: String
 
 ): MagazineCommand {
+
+    init {
+        require(this.magazineId.isNotEmpty()) { "magazineId cannot be empty" }
+        require(this.topicId.isNotEmpty()) { "topicId cannot be empty" }
+        require(this.suggestionText.isNotEmpty()) { "articleId cannot be empty" }
+        require(this.copyWriterId.isNotEmpty()) { "Suggestion copyWriterId cannot be empty" }
+        require(this.originalText.isNotEmpty()) { "Suggestion originalText cannot be empty" }
+        require(this.suggestionText.isNotEmpty()) { "Suggestion suggestionText cannot be empty" }
+    }
+
     /**
      * Function to validate Command and create the SuggestionAddedEvent
      */
     override fun createEvent(): IO<SuggestionAddedEvent> {
         return IO.effect {
-            require(this.magazineId.isNotEmpty()) { "magazineId cannot be empty" }
-            require(this.topicId.isNotEmpty()) { "topicId cannot be empty" }
-            require(this.suggestionText.isNotEmpty()) { "articleId cannot be empty" }
-            require(this.copyWriterId.isNotEmpty()) { "Suggestion copyWriterId cannot be empty" }
-            require(this.originalText.isNotEmpty()) { "Suggestion originalText cannot be empty" }
-            require(this.suggestionText.isNotEmpty()) { "Suggestion suggestionText cannot be empty" }
             SuggestionAddedEvent(
                 Date().toString(),
                 MagazineId(magazineId),
