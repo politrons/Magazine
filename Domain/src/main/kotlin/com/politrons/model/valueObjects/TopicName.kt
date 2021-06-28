@@ -1,7 +1,7 @@
 package com.politrons.model.valueObjects
 
 /**
- * Value object to represent the name of the magazine
+ * Value object to represent the name of the topic
  */
 data class TopicName(val value:String) {
 

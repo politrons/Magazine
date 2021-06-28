@@ -94,7 +94,7 @@ class MagazineIT {
             Thread.sleep(1000)
             val suggestionMagazine: Magazine = runQueryRequest(client, magazineId)
             assert(suggestionMagazine.topics[0].articles[0].suggestions.isNotEmpty())
-            assert(suggestionMagazine.topics[0].articles[0].suggestions[0].suggestion == "suggestionText")
+            assert(suggestionMagazine.topics[0].articles[0].suggestions[0].suggestion.value == "suggestionText")
         }
         client.close()
     }

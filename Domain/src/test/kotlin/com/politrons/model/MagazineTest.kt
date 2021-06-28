@@ -98,8 +98,8 @@ class MagazineTest {
             SuggestionId("id"),
             Mockito.mock(CopyWriter::class.java),
             false,
-            "original",
-            "suggestion"
+            OriginalText("originalText"),
+            SuggestionText("suggestion")
         )
 
         val magazine = Magazine(MagazineId(UUID.randomUUID().toString()), MagazineName("name"), listOf(topic))
@@ -135,8 +135,8 @@ class MagazineTest {
             SuggestionId("id"),
             CopyWriter("fooCopyWriterId", emptyList()),
             false,
-            "original",
-            "suggestion"
+            OriginalText("originalText"),
+            SuggestionText("suggestion")
         )
 
         val magazine = Magazine(MagazineId(UUID.randomUUID().toString()), MagazineName("name"), listOf(topic))

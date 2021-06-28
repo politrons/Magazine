@@ -23,8 +23,8 @@ class ArticleTest {
             SuggestionId("id"),
             Mockito.mock(CopyWriter::class.java),
             false,
-            "originalText",
-            "suggestion"
+            OriginalText("originalText"),
+            SuggestionText("suggestion")
         )
         //When
         val tryArticle = kotlin.runCatching { article.addSuggestion(suggestion) }
@@ -50,8 +50,8 @@ class ArticleTest {
             SuggestionId("id"),
             CopyWriter("foo", emptyList()),
             false,
-            "originalText",
-            "suggestion"
+            OriginalText("originalText"),
+            SuggestionText("suggestion")
         )
         //When
         val tryArticle = kotlin.runCatching { article.addSuggestion(suggestion) }

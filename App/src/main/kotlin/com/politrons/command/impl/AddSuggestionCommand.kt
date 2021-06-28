@@ -5,10 +5,7 @@ import com.politrons.command.MagazineCommand
 import com.politrons.events.SuggestionAddedEvent
 import com.politrons.model.entities.CopyWriter
 import com.politrons.model.entities.Suggestion
-import com.politrons.model.valueObjects.ArticleId
-import com.politrons.model.valueObjects.MagazineId
-import com.politrons.model.valueObjects.SuggestionId
-import com.politrons.model.valueObjects.TopicId
+import com.politrons.model.valueObjects.*
 import java.util.*
 
 data class AddSuggestionCommand(
@@ -44,8 +41,8 @@ data class AddSuggestionCommand(
                     SuggestionId(UUID.randomUUID().toString()),
                     CopyWriter(copyWriterId, emptyList()),
                     false,
-                    originalText,
-                    suggestionText
+                    OriginalText(originalText),
+                    SuggestionText(suggestionText)
                 )
             )
         }

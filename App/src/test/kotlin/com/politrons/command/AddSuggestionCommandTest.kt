@@ -21,8 +21,8 @@ class AddSuggestionCommandTest {
         assert(tryEvent.getOrThrow().topicId.value == command.topicId)
         assert(tryEvent.getOrThrow().articleId.value == command.articleId)
         assert(tryEvent.getOrThrow().suggestion.copyWriter.id == command.copyWriterId)
-        assert(tryEvent.getOrThrow().suggestion.originalText == command.originalText)
-        assert(tryEvent.getOrThrow().suggestion.suggestion == command.suggestionText)
+        assert(tryEvent.getOrThrow().suggestion.originalText.value == command.originalText)
+        assert(tryEvent.getOrThrow().suggestion.suggestion.value == command.suggestionText)
 
     }
 
