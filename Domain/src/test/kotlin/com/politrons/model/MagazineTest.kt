@@ -1,10 +1,9 @@
 package com.politrons.model
 
-import com.politrons.model.entities.Article
-import com.politrons.model.entities.Suggestion
-import com.politrons.model.entities.Topic
+import com.politrons.model.entities.*
 import com.politrons.model.valueObjects.*
 import org.junit.Test
+import org.mockito.Mockito
 import java.util.*
 
 class MagazineTest {
@@ -12,16 +11,13 @@ class MagazineTest {
     @Test
     fun addArticleSuccessful() {
         //Given
-        val article = Article(
-            ArticleId("id"),
-            TopicId("topicId"),
-            "journalistId",
-            "copyWriterId",
-            false,
-            ArticleTitle("title"),
-            ArticleContent("text"),
-            emptyList()
-        )
+        val topicId = TopicId("topicId")
+        val articleId = ArticleId("id")
+        val journalist = Journalist("id", emptyList())
+        val copyWriter = CopyWriter("id", emptyList())
+        val title = ArticleTitle("title")
+        val content = ArticleContent("text")
+
         val topic = Topic(
             TopicId("topicId"),
             MagazineId("magazineId"),
@@ -29,9 +25,18 @@ class MagazineTest {
             emptyList()
         )
 
-        val magazine = Magazine(MagazineId(UUID.randomUUID().toString()),MagazineName("name"), listOf(topic))
+        val magazine = Magazine(MagazineId(UUID.randomUUID().toString()), MagazineName("name"), listOf(topic))
         //When
-        val tryMagazine = kotlin.runCatching { magazine.addArticle(article) }
+        val tryMagazine = kotlin.runCatching {
+            magazine.addArticle(
+                topicId,
+                articleId,
+                journalist,
+                copyWriter,
+                title,
+                content
+            )
+        }
         //Then
         assert(tryMagazine.isSuccess)
         assert(tryMagazine.getOrThrow().topics.isNotEmpty())
@@ -41,16 +46,13 @@ class MagazineTest {
     @Test
     fun addArticleErrorWrongTopicId() {
         //Given
-        val article = Article(
-            ArticleId("id"),
-            TopicId("foo"),
-            "journalistId",
-            "copyWriterId",
-            false,
-            ArticleTitle("title"),
-            ArticleContent("text"),
-            emptyList()
-        )
+        val topicId = TopicId("fooTopicId")
+        val articleId = ArticleId("id")
+        val journalist = Journalist("id", emptyList())
+        val copyWriter = CopyWriter("id", emptyList())
+        val title = ArticleTitle("title")
+        val content = ArticleContent("text")
+
         val topic = Topic(
             TopicId("topicId"),
             MagazineId("magazineId"),
@@ -58,10 +60,18 @@ class MagazineTest {
             emptyList()
         )
 
-        val magazine = Magazine(MagazineId(UUID.randomUUID().toString()),MagazineName("name"), listOf(topic))
+        val magazine = Magazine(MagazineId(UUID.randomUUID().toString()), MagazineName("name"), listOf(topic))
         //When
-        val tryMagazine = kotlin.runCatching { magazine.addArticle(article) }
-        //Then
+        val tryMagazine = kotlin.runCatching {
+            magazine.addArticle(
+                topicId,
+                articleId,
+                journalist,
+                copyWriter,
+                title,
+                content
+            )
+        }        //Then
         assert(tryMagazine.isFailure)
     }
 
@@ -70,9 +80,9 @@ class MagazineTest {
         //Given
         val article = Article(
             ArticleId("id"),
-            TopicId("topicId"),
-            "journalistId",
-            "copyWriterId",
+            Mockito.mock(Topic::class.java),
+            Mockito.mock(Journalist::class.java),
+            Mockito.mock(CopyWriter::class.java),
             false,
             ArticleTitle("title"),
             ArticleContent("text"),
@@ -86,13 +96,13 @@ class MagazineTest {
         )
         val suggestion = Suggestion(
             SuggestionId("id"),
-            "copyWriterId",
+            Mockito.mock(CopyWriter::class.java),
             false,
             "original",
             "suggestion"
         )
 
-        val magazine = Magazine(MagazineId(UUID.randomUUID().toString()),MagazineName("name"), listOf(topic))
+        val magazine = Magazine(MagazineId(UUID.randomUUID().toString()), MagazineName("name"), listOf(topic))
         //When
         val tryMagazine = kotlin.runCatching { magazine.addSuggestion(topic.id, article.id, suggestion) }
         //Then
@@ -107,9 +117,9 @@ class MagazineTest {
         //Given
         val article = Article(
             ArticleId("id"),
-            TopicId("topicId"),
-            "journalistId",
-            "copyWriterId",
+            Mockito.mock(Topic::class.java),
+            Mockito.mock(Journalist::class.java),
+            CopyWriter("copyWriterId", emptyList()),
             false,
             ArticleTitle("title"),
             ArticleContent("text"),
@@ -123,13 +133,13 @@ class MagazineTest {
         )
         val suggestion = Suggestion(
             SuggestionId("id"),
-            "foo",
+            CopyWriter("fooCopyWriterId", emptyList()),
             false,
             "original",
             "suggestion"
         )
 
-        val magazine = Magazine(MagazineId(UUID.randomUUID().toString()),MagazineName("name"), listOf(topic))
+        val magazine = Magazine(MagazineId(UUID.randomUUID().toString()), MagazineName("name"), listOf(topic))
         //When
         val tryMagazine = kotlin.runCatching { magazine.addSuggestion(topic.id, article.id, suggestion) }
         //Then

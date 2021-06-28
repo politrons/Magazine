@@ -1,13 +1,8 @@
 package com.politrons.model
 
 import com.politrons.exceptions.TopicNotFoundException
-import com.politrons.model.entities.Article
-import com.politrons.model.entities.Suggestion
-import com.politrons.model.entities.Topic
-import com.politrons.model.valueObjects.ArticleId
-import com.politrons.model.valueObjects.MagazineId
-import com.politrons.model.valueObjects.MagazineName
-import com.politrons.model.valueObjects.TopicId
+import com.politrons.model.entities.*
+import com.politrons.model.valueObjects.*
 
 /**
  * Entity Aggregate root. This entity is the root of all entities, and we persist and query all values
@@ -17,20 +12,31 @@ import com.politrons.model.valueObjects.TopicId
  * * [one-to-Many] Magazine -> Topics - Topic -> Magazine
  */
 
-data class Magazine(val id: MagazineId,
-                    val name: MagazineName,
-                    val topics: List<Topic>) {
+data class Magazine(
+    val id: MagazineId,
+    val name: MagazineName,
+    val topics: List<Topic>
+) {
 
 
     /**
      * Function to add an article into the topic of the magazine.
      * We follow next steps to perform the task:
      * * We search in the magazine the topic using the topicId from the article
-     * * We add the article in the topic
+     * * We create the article with all the information provided.
+     * * We add the article in the topic.
      * * We create a new magazine with the new changes.
      */
-    fun addArticle(article: Article): Magazine {
-        val topic = findTopic(article.topicId)
+    fun addArticle(
+        topicId: TopicId,
+        articleId: ArticleId,
+        journalist: Journalist,
+        copyWriter: CopyWriter,
+        title: ArticleTitle,
+        content: ArticleContent
+    ): Magazine {
+        val topic = findTopic(topicId)
+        val article = Article(articleId, topic, journalist, copyWriter, false, title, content, emptyList())
         val newTopic = topic.addArticle(article)
         return this.copy(topics = filterTopicsById(newTopic) + listOf(newTopic))
     }

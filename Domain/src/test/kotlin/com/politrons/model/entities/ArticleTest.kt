@@ -2,6 +2,7 @@ package com.politrons.model.entities
 
 import com.politrons.model.valueObjects.*
 import org.junit.Test
+import org.mockito.Mockito
 
 class ArticleTest {
 
@@ -10,9 +11,9 @@ class ArticleTest {
         //Given
         val article = Article(
             ArticleId("id"),
-            TopicId("topicId"),
-            "journalistId",
-            "copyWriterId",
+            Mockito.mock(Topic::class.java),
+            Mockito.mock(Journalist::class.java),
+            Mockito.mock(CopyWriter::class.java),
             false,
             ArticleTitle("title"),
             ArticleContent("text"),
@@ -20,7 +21,7 @@ class ArticleTest {
         )
         val suggestion = Suggestion(
             SuggestionId("id"),
-            "copyWriterId",
+            Mockito.mock(CopyWriter::class.java),
             false,
             "originalText",
             "suggestion"
@@ -37,9 +38,9 @@ class ArticleTest {
         //Given
         val article = Article(
             ArticleId("id"),
-            TopicId("topicId"),
-            "journalistId",
-            "copyWriterId",
+            Mockito.mock(Topic::class.java),
+            Mockito.mock(Journalist::class.java),
+            CopyWriter("copyWriter", emptyList()),
             false,
             ArticleTitle("title"),
             ArticleContent("text"),
@@ -47,7 +48,7 @@ class ArticleTest {
         )
         val suggestion = Suggestion(
             SuggestionId("id"),
-            "foo",
+            CopyWriter("foo", emptyList()),
             false,
             "originalText",
             "suggestion"
@@ -64,9 +65,9 @@ class ArticleTest {
         val article = kotlin.runCatching {
             Article(
                 ArticleId("articleId"),
-                TopicId("topicId"),
-                "journalistId",
-                "copyWriterId",
+                Mockito.mock(Topic::class.java),
+                Mockito.mock(Journalist::class.java),
+                Mockito.mock(CopyWriter::class.java),
                 true,
                 ArticleTitle("title"),
                 ArticleContent("text"),
@@ -85,9 +86,9 @@ class ArticleTest {
         val article = kotlin.runCatching {
             Article(
                 ArticleId(""),
-                TopicId(""),
-                "",
-                "",
+                Mockito.mock(Topic::class.java),
+                Mockito.mock(Journalist::class.java),
+                Mockito.mock(CopyWriter::class.java),
                 false,
                 ArticleTitle(""),
                 ArticleContent(""),

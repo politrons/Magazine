@@ -4,13 +4,8 @@ import com.politrons.events.ArticleDraftCreatedEvent
 import com.politrons.events.MagazineCreatedEvent
 import com.politrons.events.MagazineEvent
 import com.politrons.events.SuggestionAddedEvent
-import com.politrons.model.entities.Article
-import com.politrons.model.entities.Suggestion
-import com.politrons.model.entities.Topic
-import com.politrons.model.valueObjects.ArticleId
-import com.politrons.model.valueObjects.MagazineId
-import com.politrons.model.valueObjects.MagazineName
-import com.politrons.model.valueObjects.TopicId
+import com.politrons.model.entities.*
+import com.politrons.model.valueObjects.*
 import com.politrons.reposirory.impl.MagazineRepositoryImpl
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.runBlocking
@@ -48,12 +43,24 @@ class MagazineRepositoryTest {
             listOf(Mockito.mock(Topic::class.java))
         )
         repo.saveMagazineCreatedEvent(createMagazineEvent).unsafeRunSync()
-        val articleMock = Mockito.mock(Article::class.java)
-        `when`(articleMock.id).thenReturn(ArticleId("articleId"))
+
+        val topicId = Mockito.mock(TopicId::class.java)
+        val articleId = Mockito.mock(ArticleId::class.java)
+        val journalist = Mockito.mock(Journalist::class.java)
+        val copyWriter = Mockito.mock(CopyWriter::class.java)
+        val title = Mockito.mock(ArticleTitle::class.java)
+        val content = Mockito.mock(ArticleContent::class.java)
+
+        `when`(articleId.value).thenReturn("articleId")
         val event = ArticleDraftCreatedEvent(
             "timestamp",
             MagazineId("magazineId"),
-            articleMock
+            topicId,
+            articleId,
+            journalist,
+            copyWriter,
+            title,
+            content
         )
         val saveMagazineCreatedEventProgram = repo.saveArticleDraftCreatedEvent(event)
         val runCatching = kotlin.runCatching { saveMagazineCreatedEventProgram.unsafeRunSync() }

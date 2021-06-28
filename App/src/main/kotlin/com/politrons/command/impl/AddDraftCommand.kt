@@ -4,6 +4,8 @@ import arrow.fx.IO
 import com.politrons.command.MagazineCommand
 import com.politrons.events.ArticleDraftCreatedEvent
 import com.politrons.model.entities.Article
+import com.politrons.model.entities.CopyWriter
+import com.politrons.model.entities.Journalist
 import com.politrons.model.valueObjects.*
 import java.util.*
 
@@ -33,16 +35,12 @@ data class AddDraftCommand(
             ArticleDraftCreatedEvent(
                 Date().toString(),
                 MagazineId(magazineId),
-                Article(
-                    ArticleId(UUID.randomUUID().toString()),
-                    TopicId(topicId),
-                    journalistId,
-                    copyWriterId,
-                    false,
-                    ArticleTitle(title),
-                    ArticleContent(content),
-                    emptyList()
-                )
+                TopicId(topicId),
+                ArticleId(UUID.randomUUID().toString()),
+                Journalist(journalistId, emptyList()),
+                CopyWriter(copyWriterId, emptyList()),
+                ArticleTitle(title),
+                ArticleContent(content)
             )
         }
     }

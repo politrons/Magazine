@@ -25,7 +25,7 @@ object MockUtils {
 
     class MagazineRepositoryMock(
         private val saveMagazineCreatedEventFunc: (MagazineCreatedEvent) -> IO<MagazineId> = { e -> IO.effect { e.magazineId } },
-        private val saveArticleDraftCreatedEventFunc: (ArticleDraftCreatedEvent) -> IO<ArticleId> = { e -> IO.effect { e.article.id } },
+        private val saveArticleDraftCreatedEventFunc: (ArticleDraftCreatedEvent) -> IO<ArticleId> = { e -> IO.effect { e.articleId } },
         private val saveSuggestionAddedEventFunc: (SuggestionAddedEvent) -> IO<SuggestionId> = { e -> IO.effect { e.suggestion.id } },
 
         ) : MagazineRepository {

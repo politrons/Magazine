@@ -3,6 +3,7 @@ package com.politrons.model.entities
 import com.politrons.exceptions.ArticleNotFoundException
 import com.politrons.model.valueObjects.*
 import org.junit.Test
+import org.mockito.Mockito
 
 class TopicTest {
 
@@ -11,9 +12,9 @@ class TopicTest {
         //Given
         val article = Article(
             ArticleId("id"),
-            TopicId("topicId"),
-            "journalistId",
-            "copyWriterId",
+            Mockito.mock(Topic::class.java),
+            Mockito.mock(Journalist::class.java),
+            Mockito.mock(CopyWriter::class.java),
             false,
             ArticleTitle("title"),
             ArticleContent("text"),
@@ -37,9 +38,9 @@ class TopicTest {
         //Given
         val article = Article(
             ArticleId("id"),
-            TopicId("topicId"),
-            "journalistId",
-            "copyWriterId",
+            Mockito.mock(Topic::class.java),
+            Mockito.mock(Journalist::class.java),
+            Mockito.mock(CopyWriter::class.java),
             false,
             ArticleTitle("title"),
             ArticleContent("text"),
@@ -63,9 +64,9 @@ class TopicTest {
         //Given
         val article = Article(
             ArticleId("id"),
-            TopicId("topicId"),
-            "journalistId",
-            "copyWriterId",
+            Mockito.mock(Topic::class.java),
+            Mockito.mock(Journalist::class.java),
+            Mockito.mock(CopyWriter::class.java),
             false,
             ArticleTitle("title"),
             ArticleContent("text"),

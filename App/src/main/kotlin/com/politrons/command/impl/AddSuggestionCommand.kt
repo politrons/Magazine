@@ -3,6 +3,7 @@ package com.politrons.command.impl
 import arrow.fx.IO
 import com.politrons.command.MagazineCommand
 import com.politrons.events.SuggestionAddedEvent
+import com.politrons.model.entities.CopyWriter
 import com.politrons.model.entities.Suggestion
 import com.politrons.model.valueObjects.ArticleId
 import com.politrons.model.valueObjects.MagazineId
@@ -18,7 +19,7 @@ data class AddSuggestionCommand(
     val originalText: String,
     val suggestionText: String
 
-): MagazineCommand {
+) : MagazineCommand {
 
     init {
         require(this.magazineId.isNotEmpty()) { "magazineId cannot be empty" }
@@ -39,7 +40,13 @@ data class AddSuggestionCommand(
                 MagazineId(magazineId),
                 TopicId(topicId),
                 ArticleId(articleId),
-                Suggestion(SuggestionId(UUID.randomUUID().toString()), copyWriterId, false, originalText, suggestionText)
+                Suggestion(
+                    SuggestionId(UUID.randomUUID().toString()),
+                    CopyWriter(copyWriterId, emptyList()),
+                    false,
+                    originalText,
+                    suggestionText
+                )
             )
         }
     }

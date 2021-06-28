@@ -85,7 +85,7 @@ class MagazineIT {
                 addDraftMagazine.id.value,
                 addDraftMagazine.topics[0].id.value,
                 articleId,
-                addDraftMagazine.topics[0].articles[0].copyWriterId,
+                addDraftMagazine.topics[0].articles[0].copyWriter.id,
                 "originalText",
                 "suggestionText"
             )

@@ -1,13 +1,19 @@
 package com.politrons.events
 
-import com.politrons.model.entities.Article
 import com.politrons.model.Magazine
-import com.politrons.model.valueObjects.MagazineId
+import com.politrons.model.entities.CopyWriter
+import com.politrons.model.entities.Journalist
+import com.politrons.model.valueObjects.*
 
 data class ArticleDraftCreatedEvent(
     val timestamp: String,
     override val magazineId: MagazineId,
-    val article: Article
+    val topicId: TopicId,
+    val articleId: ArticleId,
+    val journalist: Journalist,
+    val copyWriter: CopyWriter,
+    val title: ArticleTitle,
+    val content: ArticleContent
 ) : MagazineEvent(magazineId) {
 
     init {
@@ -15,6 +21,13 @@ data class ArticleDraftCreatedEvent(
     }
 
     override fun rehydrate(magazine: Magazine): Magazine {
-        return magazine.addArticle(article)
+        return magazine.addArticle(
+            topicId,
+            articleId,
+            journalist,
+            copyWriter,
+            title,
+            content
+        )
     }
 }

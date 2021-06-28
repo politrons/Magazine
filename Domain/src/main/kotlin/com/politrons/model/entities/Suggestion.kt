@@ -7,14 +7,13 @@ import com.politrons.model.valueObjects.SuggestionId
  */
 data class Suggestion(
     val id: SuggestionId,
-    val copyWriterId: String,
+    val copyWriter: CopyWriter,
     val approved: Boolean,
     val originalText: String,
     val suggestion: String
 ) {
 
     init {
-        require(this.copyWriterId.isNotEmpty()) { "Suggestion copyWriterId cannot be empty" }
         require(!this.approved) { "A Suggestion already approved cannot be added" }
         require(this.originalText.isNotEmpty()) { "Suggestion originalText cannot be empty" }
         require(this.suggestion.isNotEmpty()) { "Suggestion suggestion cannot be empty" }

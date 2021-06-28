@@ -20,9 +20,9 @@ import com.politrons.model.valueObjects.TopicId
  */
 data class Article(
     val id: ArticleId,
-    val topicId: TopicId,
-    val journalistId: String,
-    val copyWriterId: String,
+    val topic: Topic,
+    val journalist: Journalist,
+    val copyWriter: CopyWriter,
     val published: Boolean,
     val title: ArticleTitle,
     val content: ArticleContent,
@@ -31,14 +31,12 @@ data class Article(
 
     init {
         require(!this.published) { "An article already published cannot be publish again" }
-        require(this.journalistId.isNotEmpty()) { "Article journalistId cannot be empty" }
-        require(this.copyWriterId.isNotEmpty()) { "Article copyWriterId cannot be empty" }
     }
 
     fun addSuggestion(
         suggestion: Suggestion
     ): Article {
-        require(this.copyWriterId == suggestion.copyWriterId) { " Error:Only the copywriter assigned to the article can add suggestions" }
+        require(this.copyWriter.id == suggestion.copyWriter.id) { " Error:Only the copywriter assigned to the article can add suggestions" }
         require(!published) { "An article already published cannot be publish again" }
         return this.copy(suggestions = (suggestions + listOf(suggestion)))
     }

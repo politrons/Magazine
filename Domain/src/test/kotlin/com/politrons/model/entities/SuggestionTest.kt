@@ -3,6 +3,7 @@ package com.politrons.model.entities
 import com.politrons.model.entities.Suggestion
 import com.politrons.model.valueObjects.SuggestionId
 import org.junit.Test
+import org.mockito.Mockito
 
 class SuggestionTest {
 
@@ -12,7 +13,7 @@ class SuggestionTest {
         val suggestion = kotlin.runCatching {
             Suggestion(
                 SuggestionId("id"),
-                "",
+                Mockito.mock(CopyWriter::class.java),
                 false,
                 "",
                 ""

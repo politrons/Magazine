@@ -19,11 +19,11 @@ class AddDraftCommandTest {
         val tryEvent = kotlin.runCatching { command.createEvent().unsafeRunSync() }
         assert(tryEvent.isSuccess)
         assert(tryEvent.getOrThrow().magazineId.value == command.magazineId)
-        assert(tryEvent.getOrThrow().article.topicId.value == command.topicId)
-        assert(tryEvent.getOrThrow().article.journalistId == command.journalistId)
-        assert(tryEvent.getOrThrow().article.copyWriterId == command.copyWriterId)
-        assert(tryEvent.getOrThrow().article.title.value == command.title)
-        assert(tryEvent.getOrThrow().article.content.value == command.content)
+        assert(tryEvent.getOrThrow().topicId.value == command.topicId)
+        assert(tryEvent.getOrThrow().journalist.id == command.journalistId)
+        assert(tryEvent.getOrThrow().copyWriter.id == command.copyWriterId)
+        assert(tryEvent.getOrThrow().title.value == command.title)
+        assert(tryEvent.getOrThrow().content.value == command.content)
     }
 
     @Test
