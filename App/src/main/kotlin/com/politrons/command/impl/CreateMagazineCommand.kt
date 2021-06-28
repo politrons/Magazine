@@ -8,6 +8,7 @@ import com.politrons.model.entities.Topic
 import com.politrons.model.valueObjects.MagazineId
 import com.politrons.model.valueObjects.MagazineName
 import com.politrons.model.valueObjects.TopicId
+import com.politrons.model.valueObjects.TopicName
 import java.util.*
 
 data class CreateMagazineCommand(
@@ -36,6 +37,6 @@ data class CreateMagazineCommand(
 
     private fun createTopics(magazineId: MagazineId) =
         topics.foldLeft(emptyList<Topic>()) { topics, topicName ->
-            topics + Topic(TopicId(UUID.randomUUID().toString()), magazineId = magazineId, topicName, emptyList())
+            topics + Topic(TopicId(UUID.randomUUID().toString()), magazineId = magazineId, TopicName(topicName), emptyList())
         }
 }

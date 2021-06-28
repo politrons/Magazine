@@ -23,7 +23,7 @@ class TopicTest {
         val topic = Topic(
             TopicId("topicId"),
             MagazineId("magazineId"),
-            "name",
+            TopicName("name"),
             emptyList()
         )
         //When
@@ -49,7 +49,7 @@ class TopicTest {
         val topic = Topic(
             TopicId("topicId"),
             MagazineId("magazineId"),
-            "name",
+            TopicName("name"),
             listOf(article)
         )
         //When
@@ -75,7 +75,7 @@ class TopicTest {
         val topic = Topic(
             TopicId("topicId"),
             MagazineId("magazineId"),
-            "name",
+            TopicName("name"),
            emptyList()
         )
         //When

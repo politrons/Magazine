@@ -34,7 +34,7 @@ class MagazineIT {
             val magazine: Magazine = runQueryRequest(client, magazineId)
             assert(magazine.id.value == magazineId)
             assert(magazine.topics.isNotEmpty())
-            assert(magazine.topics[0].name == command.topics[0])
+            assert(magazine.topics[0].name.value == command.topics[0])
         }
         client.close()
     }

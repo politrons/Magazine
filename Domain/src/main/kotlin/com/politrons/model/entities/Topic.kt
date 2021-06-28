@@ -4,23 +4,20 @@ import com.politrons.exceptions.ArticleNotFoundException
 import com.politrons.model.valueObjects.ArticleId
 import com.politrons.model.valueObjects.MagazineId
 import com.politrons.model.valueObjects.TopicId
+import com.politrons.model.valueObjects.TopicName
 
 /**
  * Entity that describe the Topic to be part of the Magazine.
  *
  * Relationships:
- * * [one-to-Many] Topic -> Articles - Article -> Topic
+ * * [many-to-Many] Topic -> Articles - Article -> Topic
  */
 data class Topic(
     val id: TopicId,
     val magazineId: MagazineId,
-    val name: String,
+    val name: TopicName,
     val articles: List<Article> = emptyList()
 ) {
-
-    init {
-        require(this.name.isNotEmpty()) { "Topic name cannot be empty" }
-    }
 
     fun addArticle(article: Article): Topic {
         return this.copy(articles = (articles.filterBy(article) + listOf(article)))

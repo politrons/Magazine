@@ -21,7 +21,7 @@ class MagazineTest {
         val topic = Topic(
             TopicId("topicId"),
             MagazineId("magazineId"),
-            "name",
+            TopicName("name"),
             emptyList()
         )
 
@@ -56,7 +56,7 @@ class MagazineTest {
         val topic = Topic(
             TopicId("topicId"),
             MagazineId("magazineId"),
-            "name",
+            TopicName("name"),
             emptyList()
         )
 
@@ -91,7 +91,7 @@ class MagazineTest {
         val topic = Topic(
             TopicId("topicId"),
             MagazineId("magazineId"),
-            "name",
+            TopicName("name"),
             listOf(article)
         )
         val suggestion = Suggestion(
@@ -128,7 +128,7 @@ class MagazineTest {
         val topic = Topic(
             TopicId("topicId"),
             MagazineId("magazineId"),
-            "name",
+            TopicName("name"),
             listOf(article)
         )
         val suggestion = Suggestion(

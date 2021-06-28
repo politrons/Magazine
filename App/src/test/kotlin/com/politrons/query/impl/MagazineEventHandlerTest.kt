@@ -8,6 +8,7 @@ import com.politrons.model.entities.Topic
 import com.politrons.model.valueObjects.MagazineId
 import com.politrons.model.valueObjects.MagazineName
 import com.politrons.model.valueObjects.TopicId
+import com.politrons.model.valueObjects.TopicName
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
@@ -21,7 +22,7 @@ class MagazineEventHandlerTest {
         //Given
         val eventBus: Channel<MagazineEvent> = Channel()
         val eventHandler = MagazineEventHandlerImpl(eventBus)
-        val topic = Topic(TopicId("id"), MagazineId("magazineId"), "name", emptyList())
+        val topic = Topic(TopicId("id"), MagazineId("magazineId"), TopicName("name"), emptyList())
         //When
         val launch = GlobalScope.launch {
             eventBus.send(MagazineCreatedEvent("timestamp", MagazineId("magazineId"), MagazineName("name"), listOf(topic)))
@@ -39,7 +40,7 @@ class MagazineEventHandlerTest {
         //Given
         val eventBus: Channel<MagazineEvent> = Channel()
         val eventHandler = MagazineEventHandlerImpl(eventBus)
-        val topic = Topic(TopicId("id"), MagazineId("magazineId"), "name", emptyList())
+        val topic = Topic(TopicId("id"), MagazineId("magazineId"), TopicName("name"), emptyList())
         //When
         val launch = GlobalScope.launch {
             eventBus.send(MagazineCreatedEvent("timestamp", MagazineId(""), MagazineName("name"), listOf(topic)))
