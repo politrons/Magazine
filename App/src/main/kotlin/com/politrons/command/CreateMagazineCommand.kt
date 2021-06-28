@@ -20,7 +20,7 @@ data class CreateMagazineCommand(
     fun createEvent(): IO<MagazineCreatedEvent> {
         return IO.effect {
             require(this.editorId.isNotEmpty()) { "Editor id cannot be empty" }
-            require(this.editorId.isNotEmpty()) { "Magazine name cannot be empty" }
+            require(this.name.isNotEmpty()) { "Magazine name cannot be empty" }
             require(this.topics.isNotEmpty()) { "Magazine topics list cannot be empty" }
             require(topics.count { topicName -> topicName.isNotEmpty() } == topics.size) { "Magazine topics name cannot be empty" }
             val magazineId = MagazineId(UUID.randomUUID().toString())
