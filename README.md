@@ -50,6 +50,7 @@ In Magazine, Event sourcing together with CQRS, allow us persist events in order
 * ```ArticleDraftCreatedEvent```: Event that keep the state of the add draft article in the magazine.
 * ```SuggestionAddedEvent```: Event that keep the state of the add suggestion into the article.
 
+
 ## Testing
 
 ![My image](img/testPyramid.png)
